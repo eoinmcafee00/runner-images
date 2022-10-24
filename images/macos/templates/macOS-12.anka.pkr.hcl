@@ -163,7 +163,6 @@ build {
       "./provision/core/commonutils.sh"
     ]
     environment_vars = [
-      "API_PAT=${var.github _api_pat}",
       "USER_PASSWORD=${var.vm_password}"
     ]
     execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
