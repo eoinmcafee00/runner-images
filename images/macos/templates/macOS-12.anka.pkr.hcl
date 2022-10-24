@@ -1,12 +1,12 @@
-variable "source_vm_name" {
-  type = string
-}
+#variable "source_vm_name" {
+#  type = string
+#}
 
-variable "source_vm_tag" {
-  type = string
-}
+#variable "source_vm_tag" {
+#  type = string
+#}
 
-variable "build_id" {
+variable "vm_name" {
   type = string
 }
 
@@ -20,11 +20,6 @@ variable "vm_password" {
   sensitive = true
 }
 
-variable "github_api_pat" {
-  type = string
-  default = ""
-}
-
 variable "xcode_install_user" {
   type = string
   sensitive = true
@@ -35,33 +30,37 @@ variable "xcode_install_password" {
   sensitive = true
 }
 
+variable "installer" {
+  type = string
+  default = "latest"
+}
+
 variable "vcpu_count" {
   type = string
-  default = "6"
+  default = "4"
 }
 
 variable "ram_size" {
   type = string
-  default = "24G"
+  default = "8G"
 }
 
-variable "image_os" {
+variable "disk_size" {
   type = string
-  default = "macos12"
+  default = "100G"
 }
 
-source "veertu-anka-vm-clone" "template" {
-  vm_name = "${var.build_id}"
-  source_vm_name = "${var.source_vm_name}"
-  source_vm_tag = "${var.source_vm_tag}"
+source "veertu-anka-vm-create" "base" {
+  vm_name= "${var.vm_name}"
+  installer = "${var.installer}"
   vcpu_count = "${var.vcpu_count}"
   ram_size = "${var.ram_size}"
-  stop_vm = "true"
+  disk_size = "${var.disk_size}"
 }
 
 build {
   sources = [
-    "source.veertu-anka-vm-clone.template"
+    "source.veertu-anka-vm-create.base"
   ]
   provisioner "shell" {
     inline = [
@@ -137,7 +136,7 @@ build {
       "./provision/configuration/configure-machine.sh"
     ]
     environment_vars = [
-      "IMAGE_VERSION=${var.build_id}",
+      "IMAGE_VERSION=${var.vm_name}",
       "IMAGE_OS=${var.image_os}",
       "PASSWORD=${var.vm_password}"
     ]
@@ -164,7 +163,7 @@ build {
       "./provision/core/commonutils.sh"
     ]
     environment_vars = [
-      "API_PAT=${var.github_api_pat}",
+      "API_PAT=${var.github _api_pat}",
       "USER_PASSWORD=${var.vm_password}"
     ]
     execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
@@ -217,7 +216,6 @@ build {
       "./provision/core/codeql-bundle.sh"
     ]
     environment_vars = [
-      "API_PAT=${var.github_api_pat}"
     ]
     execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
   }
@@ -234,7 +232,7 @@ build {
   }
   provisioner "shell" {
     inline = [
-      "pwsh -File \"$HOME/image-generation/software-report/SoftwareReport.Generator.ps1\" -OutputDirectory \"$HOME/image-generation/output/software-report\" -ImageName ${var.build_id}",
+      "pwsh -File \"$HOME/image-generation/software-report/SoftwareReport.Generator.ps1\" -OutputDirectory \"$HOME/image-generation/output/software-report\" -ImageName ${var.vm_name}",
       "pwsh -File \"$HOME/image-generation/tests/RunAll-Tests.ps1\""
     ]
     execute_command = "source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
