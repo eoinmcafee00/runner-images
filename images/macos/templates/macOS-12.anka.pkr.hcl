@@ -55,6 +55,11 @@ variable "disk_size" {
   default = "100G"
 }
 
+variable "image_os" {
+  type = string
+  default = "macos12"
+}
+
 source "veertu-anka-vm-create" "base" {
   vm_name= "${var.vm_name}"
   installer = "${var.installer}"
