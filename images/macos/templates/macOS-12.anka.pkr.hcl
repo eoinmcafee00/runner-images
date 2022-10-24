@@ -8,26 +8,31 @@
 
 variable "vm_name" {
   type = string
+  default = "12.2.0-arm"
 }
 
 variable "vm_username" {
   type = string
   sensitive = true
+  default = "admin"
 }
 
 variable "vm_password" {
   type = string
   sensitive = true
+  default = "admin"
 }
 
 variable "xcode_install_user" {
   type = string
   sensitive = true
+  default = "admin"
 }
 
 variable "xcode_install_password" {
   type = string
   sensitive = true
+  default = "admin"
 }
 
 variable "installer" {
