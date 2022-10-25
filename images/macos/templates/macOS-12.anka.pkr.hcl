@@ -37,7 +37,7 @@ variable "xcode_install_password" {
 
 variable "installer" {
   type = string
-  default = "latest"
+  default = "/Applications/Install macOS Monterey.app/"
 }
 
 variable "vcpu_count" {
