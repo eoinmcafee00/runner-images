@@ -8,12 +8,12 @@
 
 variable "vm_name" {
   type = string
-  default = "ventura-arm"
+  default = "13.0.0"
 }
 
 variable "source_vm_name" {
   type = string
-  default = "13.0.0"
+  default = "ventura-arm"
 }
 
 variable "vm_username" {
