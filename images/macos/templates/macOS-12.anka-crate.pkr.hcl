@@ -8,11 +8,6 @@
 
 variable "vm_name" {
   type = string
-  default = "ventura-arm"
-}
-
-variable "source_vm_name" {
-  type = string
   default = "13.0.0"
 }
 
@@ -65,14 +60,17 @@ variable "image_os" {
   default = "macos13"
 }
 
-source "veertu-anka-vm-clone" "clone" {
-  vm_name = "${var.vm_name}"
-  source_vm_name = "${var.source_vm_name}"
+source "veertu-anka-vm-create" "base" {
+  vm_name= "${var.vm_name}"
+  installer = "${var.installer}"
+  vcpu_count = "${var.vcpu_count}"
+  ram_size = "${var.ram_size}"
+  disk_size = "${var.disk_size}"
 }
 
 build {
   sources = [
-    "source.veertu-anka-vm-clone.clone",
+    "source.veertu-anka-vm-create.base"
   ]
   provisioner "shell" {
     inline = [
