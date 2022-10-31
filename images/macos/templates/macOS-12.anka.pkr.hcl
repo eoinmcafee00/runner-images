@@ -8,7 +8,7 @@
 
 variable "vm_name" {
   type = string
-  default = "12.2.0-arm"
+  default = "13.0.0"
 }
 
 variable "vm_username" {
@@ -37,7 +37,7 @@ variable "xcode_install_password" {
 
 variable "installer" {
   type = string
-  default = "/Applications/Install macOS Monterey.app/"
+  default = "latest"
 }
 
 variable "vcpu_count" {
@@ -57,7 +57,7 @@ variable "disk_size" {
 
 variable "image_os" {
   type = string
-  default = "macos12"
+  default = "macos13"
 }
 
 source "veertu-anka-vm-create" "base" {
