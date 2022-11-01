@@ -13,9 +13,9 @@ install_clt() {
     sudo touch $clt_placeholder
     cltPattern="Command Line Tools"
 
-    if is_Ventura; then
-        cltPattern="Command Line Tools for Xcode 14.1 Release Candidate 2"
-    fi
+#    if is_Ventura; then
+#        cltPattern="Command Line Tools for Xcode 14.1 Release Candidate 2"
+#    fi
 
     clt_label_command="/usr/sbin/softwareupdate -l |
                         grep -B 1 -E '${cltPattern}' |
