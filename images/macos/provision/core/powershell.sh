@@ -1,7 +1,7 @@
 #!/bin/bash -e -o pipefail
 source ~/utils/utils.sh
 
-sudo softwareupdate --install-rosetta
+sudo softwareupdate --install-rosetta --agree-to-license
 
 export PATH=/opt/homebrew/bin:$PATH
 source ~/.bash_profile
