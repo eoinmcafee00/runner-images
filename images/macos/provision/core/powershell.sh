@@ -1,11 +1,6 @@
 #!/bin/bash -e -o pipefail
 source ~/utils/utils.sh
 
-sudo softwareupdate --install-rosetta --agree-to-license
-
-export PATH=/opt/homebrew/bin:$PATH
-source ~/.bash_profile
-
 echo Installing PowerShell...
 psDownloadUrl=$(get_github_package_download_url "PowerShell/PowerShell" "contains(\"osx-x64.pkg\")" "latest" "$API_PAT")
 download_with_retries $psDownloadUrl "/tmp" "powershell.pkg"
