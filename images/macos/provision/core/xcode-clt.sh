@@ -32,7 +32,7 @@ install_clt() {
 }
 
 echo "Installing Command Line Tools..."
-install_clt
+#install_clt
 
 # Retry the installation if tools are not installed from the first attempt
 retries=30
