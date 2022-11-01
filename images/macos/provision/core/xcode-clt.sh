@@ -13,6 +13,10 @@ install_clt() {
     sudo touch $clt_placeholder
     cltPattern="Command Line Tools"
 
+    if is_Ventura; then
+        cltPattern="Command Line Tools beta"
+    fi
+
     clt_label_command="/usr/sbin/softwareupdate -l |
                         grep -B 1 -E '${cltPattern}' |
                         awk -F'*' '/^ *\\*/ {print \$2}' |
