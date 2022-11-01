@@ -1,6 +1,8 @@
 #!/bin/bash -e -o pipefail
 source ~/utils/utils.sh
 
+sudo softwareupdate --install-rosetta
+
 export PATH=/opt/homebrew/bin:$PATH
 source ~/.bash_profile
 
