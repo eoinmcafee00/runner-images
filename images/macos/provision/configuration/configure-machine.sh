@@ -61,7 +61,7 @@ done
 rm -f ./add-certificate
 
 # enable-automationmode-without-authentication
-if is_Monterey; then
+if is_Monterey  || is_Ventura; then
 retry=10
 while [ $retry -gt 0 ]; do
 {
