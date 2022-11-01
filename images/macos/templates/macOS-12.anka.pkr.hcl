@@ -1,6 +1,6 @@
 variable "source_vm_name" {
   type = string
-  default = "12.2.0-arm"
+  default = "base"
 }
 
 variable "source_vm_tag" {
@@ -10,7 +10,7 @@ variable "source_vm_tag" {
 
 variable "vm_name" {
   type = string
-  default = "darwin-base"
+  default = "packer"
 }
 
 variable "vm_username" {
