@@ -150,11 +150,11 @@ build {
     ]
     execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
   }
-  provisioner "shell" {
-    script  = "./provision/core/reboot.sh"
-    execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; sudo {{ .Vars }} {{ .Path }}"
-    expect_disconnect = true
-  }
+#  provisioner "shell" {
+#    script  = "./provision/core/reboot.sh"
+#    execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; sudo {{ .Vars }} {{ .Path }}"
+#    expect_disconnect = true
+#  }
   provisioner "shell" {
     pause_before = "30s"
     scripts = [
@@ -184,11 +184,11 @@ build {
     ]
     execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; {{ .Vars }} pwsh -f {{ .Path }}"
   }
-  provisioner "shell" {
-    script = "./provision/core/reboot.sh"
-    execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; sudo {{ .Vars }} {{ .Path }}"
-    expect_disconnect = true
-  }
+#  provisioner "shell" {
+#    script = "./provision/core/reboot.sh"
+#    execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; sudo {{ .Vars }} {{ .Path }}"
+#    expect_disconnect = true
+#  }
   provisioner "shell" {
     scripts = [
       "./provision/core/llvm.sh",
