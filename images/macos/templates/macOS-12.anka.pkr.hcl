@@ -159,6 +159,7 @@ build {
     pause_before = "30s"
     scripts = [
       "./provision/core/open_windows_check.sh",
+      "./provision/core/powershell.sh",
       "./provision/core/dotnet.sh",
       "./provision/core/python.sh",
       "./provision/core/azcopy.sh",
