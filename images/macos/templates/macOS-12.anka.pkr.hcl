@@ -58,7 +58,7 @@ variable "image_os" {
 }
 
 source "veertu-anka-vm-clone" "template" {
-  vm_name = "${var.build_id}"
+  vm_name = "${var.vm_name}"
   source_vm_name = "${var.source_vm_name}"
 #  source_vm_tag = "${var.source_vm_tag}"
 #  vcpu_count = "${var.vcpu_count}"
