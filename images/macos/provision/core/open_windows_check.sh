@@ -1,7 +1,5 @@
 #!/bin/bash -e -o pipefail
 
-sudo softwareupdate --install-rosetta --agree-to-license
-
 retry=10
 while [ $retry -gt 0 ]; do
     openwindows=$(osascript -e 'tell application "System Events" to get every window of (every process whose class of windows contains window)') && break

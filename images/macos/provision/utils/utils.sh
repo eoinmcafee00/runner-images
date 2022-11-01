@@ -184,9 +184,6 @@ configure_user_tccdb () {
 }
 
 get_github_package_download_url() {
-    export PATH=/opt/homebrew/bin:$PATH
-    source ~/.bash_profile
-
     local REPO_ORG=$1
     local FILTER=$2
     local VERSION=$3
