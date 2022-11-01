@@ -26,7 +26,7 @@ variable "vm_password" {
 variable "xcode_install_user" {
   type = string
   sensitive = true
-  default = "admin"
+  default = "anka"
 }
 
 variable "xcode_install_password" {
@@ -37,7 +37,7 @@ variable "xcode_install_password" {
 
 variable "installer" {
   type = string
-  default = "UniversalMac_12.6_21G115_Restore.ipsw"
+  default = "/Users/ec2-user/Library/Application Support/Veertu/Anka/img_lib/UniversalMac_12.6_21G115_Restore.ipsw"
 }
 
 variable "vcpu_count" {
