@@ -8,7 +8,7 @@ echo "Installing Homebrew..."
 HOMEBREW_INSTALL_URL="https://raw.githubusercontent.com/Homebrew/install/master/install.sh"
 /bin/bash -c "$(curl -fsSL ${HOMEBREW_INSTALL_URL})"
 
-echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /Users/anka/.bashrc
+echo 'PATH="/opt/homebrew/opt/curl/bin:$PATH"' >> /Users/anka/.bashrc
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/anka/.bashrc
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
