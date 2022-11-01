@@ -39,6 +39,14 @@ download_with_retries() {
     return 1
 }
 
+is_Ventura(){
+   if [ "$OSTYPE" = "darwin22" ]; then
+          true
+      else
+          false
+      fi
+}
+
 is_Monterey() {
     if [ "$OSTYPE" = "darwin21" ]; then
         true
@@ -114,6 +122,8 @@ get_brew_os_keyword() {
         echo "big_sur"
     elif is_Monterey; then
         echo "monterey"
+    elif is_Ventura; then
+        echo "ventura"
     else
         echo "null"
     fi
