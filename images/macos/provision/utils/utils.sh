@@ -84,7 +84,6 @@ get_toolset_path() {
 }
 
 get_toolset_value() {
-    brew install jq
     local toolset_path=$(get_toolset_path)
     local query=$1
     echo "$(jq -r "$query" $toolset_path)"
