@@ -25,10 +25,10 @@ variable "vm_password" {
   default = "admin"
 }
 
-#variable "github_api_pat" {
-#  type = string
-#  default = ""
-#}
+variable "github_api_pat" {
+  type = string
+  default = ""
+}
 
 variable "xcode_install_user" {
   type = string
@@ -171,7 +171,7 @@ build {
       "./provision/core/commonutils.sh"
     ]
     environment_vars = [
-#      "API_PAT=${var.github_api_pat}",
+      "API_PAT=${var.github_api_pat}",
       "USER_PASSWORD=${var.vm_password}"
     ]
     execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
@@ -224,7 +224,7 @@ build {
       "./provision/core/codeql-bundle.sh"
     ]
     environment_vars = [
-#      "API_PAT=${var.github_api_pat}"
+      "API_PAT=${var.github_api_pat}"
     ]
     execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
   }
