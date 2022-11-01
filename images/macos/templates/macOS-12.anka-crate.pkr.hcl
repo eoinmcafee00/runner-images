@@ -8,13 +8,13 @@
 
 variable "vm_name" {
   type = string
-  default = "13.0.0"
+  default = "darwin22"
 }
 
 variable "vm_username" {
   type = string
   sensitive = true
-  default = "admin"
+  default = "anka"
 }
 
 variable "vm_password" {
@@ -37,7 +37,7 @@ variable "xcode_install_password" {
 
 variable "installer" {
   type = string
-  default = "latest"
+  default = "UniversalMac_12.6_21G115_Restore.ipsw"
 }
 
 variable "vcpu_count" {
@@ -57,7 +57,7 @@ variable "disk_size" {
 
 variable "image_os" {
   type = string
-  default = "macos13"
+  default = "macos12"
 }
 
 source "veertu-anka-vm-create" "base" {
