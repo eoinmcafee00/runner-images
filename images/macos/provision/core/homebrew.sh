@@ -6,6 +6,9 @@ echo "Installing Homebrew..."
 HOMEBREW_INSTALL_URL="https://raw.githubusercontent.com/Homebrew/install/master/install.sh"
 /bin/bash -c "$(curl -fsSL ${HOMEBREW_INSTALL_URL})"
 
+export PATH=/opt/homebrew/bin:$PATH
+source ~/.bash_profile
+
 echo "Disabling Homebrew analytics..."
 brew analytics off
 
