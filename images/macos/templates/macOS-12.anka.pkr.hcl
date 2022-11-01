@@ -19,7 +19,7 @@ variable "source_vm_name" {
 variable "vm_username" {
   type = string
   sensitive = true
-  default = "admin"
+  default = "anka"
 }
 
 variable "vm_password" {
