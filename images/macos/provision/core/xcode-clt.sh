@@ -8,27 +8,27 @@ is_clt_installed() {
 
 install_clt() {
     echo "Searching online for the Command Line Tools"
-    # This temporary file prompts the 'softwareupdate' utility to list the Command Line Tools
-    clt_placeholder="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
-    sudo touch $clt_placeholder
-    cltPattern="Command Line Tools"
-
-#    if is_Ventura; then
-#        cltPattern="Command Line Tools for Xcode 14.1 Release Candidate 2"
+#    # This temporary file prompts the 'softwareupdate' utility to list the Command Line Tools
+#    clt_placeholder="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
+#    sudo touch $clt_placeholder
+#    cltPattern="Command Line Tools"
+#
+##    if is_Ventura; then
+##        cltPattern="Command Line Tools for Xcode 14.1 Release Candidate 2"
+##    fi
+#
+#    clt_label_command="/usr/sbin/softwareupdate -l |
+#                        grep -B 1 -E '${cltPattern}' |
+#                        awk -F'*' '/^ *\\*/ {print \$2}' |
+#                        sed -e 's/^ *Label: //' -e 's/^ *//' |
+#                        sort -V |
+#                        tail -n1"
+#    clt_label=$(eval $clt_label_command) || true
+#    if [[ -n "$clt_label" ]]; then
+#        echo "Installing $clt_label"
+#        sudo "/usr/sbin/softwareupdate" "-i" "$clt_label"
 #    fi
-
-    clt_label_command="/usr/sbin/softwareupdate -l |
-                        grep -B 1 -E '${cltPattern}' |
-                        awk -F'*' '/^ *\\*/ {print \$2}' |
-                        sed -e 's/^ *Label: //' -e 's/^ *//' |
-                        sort -V |
-                        tail -n1"
-    clt_label=$(eval $clt_label_command) || true
-    if [[ -n "$clt_label" ]]; then
-        echo "Installing $clt_label"
-        sudo "/usr/sbin/softwareupdate" "-i" "$clt_label"
-    fi
-    sudo "/bin/rm" "-f" "$clt_placeholder"
+#    sudo "/bin/rm" "-f" "$clt_placeholder"
 }
 
 echo "Installing Command Line Tools..."
