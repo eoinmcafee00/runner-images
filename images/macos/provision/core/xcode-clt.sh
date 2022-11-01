@@ -14,7 +14,7 @@ install_clt() {
     cltPattern="Command Line Tools"
 
     if is_Ventura; then
-        cltPattern="Command Line Tools beta"
+        cltPattern="Command Line Tools for Xcode 14.1 Release Candidate 2"
     fi
 
     clt_label_command="/usr/sbin/softwareupdate -l |
