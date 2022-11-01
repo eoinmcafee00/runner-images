@@ -120,6 +120,9 @@ get_brew_os_keyword() {
 }
 
 should_build_from_source() {
+    export PATH=/opt/homebrew/bin:$PATH
+    source ~/.bash_profile
+
     local tool_name=$1
     local os_name=$2
     local tool_info=$(brew info --json=v1 $tool_name)
@@ -181,6 +184,9 @@ configure_user_tccdb () {
 }
 
 get_github_package_download_url() {
+    export PATH=/opt/homebrew/bin:$PATH
+    source ~/.bash_profile
+
     local REPO_ORG=$1
     local FILTER=$2
     local VERSION=$3
