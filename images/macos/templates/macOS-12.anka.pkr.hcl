@@ -33,7 +33,7 @@ variable "vm_password" {
 variable "xcode_install_user" {
   type = string
   sensitive = true
-  default = "anka"
+  default = "admin"
 }
 
 variable "xcode_install_password" {
