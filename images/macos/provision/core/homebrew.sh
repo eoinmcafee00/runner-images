@@ -25,3 +25,5 @@ brew_smart_install "wget"
 
 # init brew bundle feature
 brew tap Homebrew/bundle
+
+sudo softwareupdate --install-rosetta --agree-to-license
