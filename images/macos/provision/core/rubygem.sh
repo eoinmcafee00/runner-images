@@ -1,14 +1,6 @@
 #!/bin/bash -e -o pipefail
 source ~/utils/utils.sh
 
-brew install chruby ruby-install
-brew config
-ruby-install ruby -- --enable-shared
-ruby-install ruby
-
-echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" >> "$HOME/.bashrc"
-echo "source $(brew --prefix)/opt/chruby/share/chruby/auto.sh"  >> "$HOME/.bashrc"
-echo "chruby ruby-3.1.2" >> ~/.bashrc
 
 echo Updating RubyGems...
 gem update --system
