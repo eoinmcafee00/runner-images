@@ -12,6 +12,10 @@ if [ -n "$gemsToInstall" ]; then
     done
 fi
 
+export GEM_HOME=~/.gem >> "$HOME/.bashrc"
+export GEM_PATH=~/.gem >> "$HOME/.bashrc"
+export PATH=$PATH:$HOME/.gem/bin >> "$HOME/.bashrc"
+
 # Temporary uninstall public_suffix 5.0 gem as Cocoapods is not compatible with it yet https://github.com/actions/runner-images/issues/6149
 gem uninstall public_suffix -v 5.0.0
 
