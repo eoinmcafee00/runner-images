@@ -18,11 +18,11 @@ for module in ${psModules[@]}; do
     echo "Installing $module module"
     moduleVersions="$(get_toolset_value ".powershellModules[] | select(.name==\"$module\") | .versions[]?")"
     if [[ -z "$moduleVersions" ]];then
-        pwsh -command "& {Install-Module $module -Force -Scope AllUsers}"
+        pwsh -command "& {Install-Module $module -Force -Scope CurrentUser}"
     else
         for version in ${moduleVersions[@]}; do
             echo " - $version"
-            pwsh -command "& {Install-Module $module -RequiredVersion $version -Force -Scope AllUsers}"
+            pwsh -command "& {Install-Module $module -RequiredVersion $version -Force -Scope CurrentUser}"
         done
     fi
 done
