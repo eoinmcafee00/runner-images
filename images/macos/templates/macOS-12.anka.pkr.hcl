@@ -1,23 +1,28 @@
 variable "source_vm_name" {
   type = string
+  default = "base"
 }
 
 variable "source_vm_tag" {
   type = string
+  default = "latest"
 }
 
-variable "build_id" {
+variable "vm_name" {
   type = string
+  default = "packer"
 }
 
 variable "vm_username" {
   type = string
   sensitive = true
+  default = "anka"
 }
 
 variable "vm_password" {
   type = string
   sensitive = true
+  default = "admin"
 }
 
 variable "github_api_pat" {
@@ -28,11 +33,13 @@ variable "github_api_pat" {
 variable "xcode_install_user" {
   type = string
   sensitive = true
+  default = "admin"
 }
 
 variable "xcode_install_password" {
   type = string
   sensitive = true
+  default = "admin"
 }
 
 variable "vcpu_count" {
@@ -42,7 +49,7 @@ variable "vcpu_count" {
 
 variable "ram_size" {
   type = string
-  default = "24G"
+  default = "8G"
 }
 
 variable "image_os" {
@@ -51,12 +58,12 @@ variable "image_os" {
 }
 
 source "veertu-anka-vm-clone" "template" {
-  vm_name = "${var.build_id}"
+  vm_name = "${var.vm_name}"
   source_vm_name = "${var.source_vm_name}"
-  source_vm_tag = "${var.source_vm_tag}"
-  vcpu_count = "${var.vcpu_count}"
-  ram_size = "${var.ram_size}"
-  stop_vm = "true"
+  #  source_vm_tag = "${var.source_vm_tag}"
+  #  vcpu_count = "${var.vcpu_count}"
+  #  ram_size = "${var.ram_size}"
+  #  stop_vm = "true"
 }
 
 build {
@@ -137,7 +144,7 @@ build {
       "./provision/configuration/configure-machine.sh"
     ]
     environment_vars = [
-      "IMAGE_VERSION=${var.build_id}",
+      "IMAGE_VERSION=${var.vm_name}",
       "IMAGE_OS=${var.image_os}",
       "PASSWORD=${var.vm_password}"
     ]
@@ -234,7 +241,7 @@ build {
   }
   provisioner "shell" {
     inline = [
-      "pwsh -File \"$HOME/image-generation/software-report/SoftwareReport.Generator.ps1\" -OutputDirectory \"$HOME/image-generation/output/software-report\" -ImageName ${var.build_id}",
+      "pwsh -File \"$HOME/image-generation/software-report/SoftwareReport.Generator.ps1\" -OutputDirectory \"$HOME/image-generation/output/software-report\" -ImageName ${var.vm_name}",
       "pwsh -File \"$HOME/image-generation/tests/RunAll-Tests.ps1\""
     ]
     execute_command = "source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
