@@ -20,8 +20,8 @@ Describe "Python" {
         "python3 --version" | Should -ReturnZeroExitCode
     }
 
-    It "Python 3 is installed under /opt/homebrew/bin/" {
-        Get-WhichTool "python3" | Should -BeLike "/opt/homebrew/bin/n*"
+    It "Python 3 is installed under /usr/local/bin" {
+        Get-WhichTool "python3" | Should -BeLike "/usr/local/bin*"
     }
 
     It "Pip 2 is available" {

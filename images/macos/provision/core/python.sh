@@ -28,6 +28,8 @@ export PIPX_HOME=/usr/local/opt/pipx
 
 brew_smart_install "pipx"
 
+echo "/opt/homebrew/bin/brew shellenv" >> "${HOME}/.bashrc"
+
 echo "export PIPX_BIN_DIR=${PIPX_BIN_DIR}" >> "${HOME}/.bashrc"
 echo "export PIPX_HOME=${PIPX_HOME}" >> "${HOME}/.bashrc"
 echo 'export PATH="$PIPX_BIN_DIR:$PATH"' >> "${HOME}/.bashrc"
