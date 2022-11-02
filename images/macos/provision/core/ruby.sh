@@ -7,7 +7,7 @@ brew_smart_install "ruby@${DEFAULT_RUBY_VERSION}"
 export PATH=/usr/local/opt/ruby@${DEFAULT_RUBY_VERSION}/bin:$PATH
 GEM_PATH=`gem env|awk '/EXECUTABLE DIRECTORY/ {print $4}'`
 echo "GEM_PATH=$GEM_PATH" >> "$HOME/.bashrc"
-echo 'export PATH="$GEM_PATH:/usr/local/opt/ruby@'${DEFAULT_RUBY_VERSION}'/bin:$PATH"'  >> "$HOME/.bashrc"
+echo 'export PATH="$GEM_PATH:/opt/homebrew/opt/ruby@'${DEFAULT_RUBY_VERSION}'/bin:$PATH"'  >> "$HOME/.bashrc"
 
 echo "Install Ruby from toolset..."
 [ -n "$API_PAT" ] && authString=(-H "Authorization: token ${API_PAT}")

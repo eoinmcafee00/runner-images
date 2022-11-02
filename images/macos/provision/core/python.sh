@@ -23,8 +23,8 @@ echo "Brew Installing Python 3"
 brew_smart_install "python@3.10" || brew link --overwrite python@3.10
 
 echo "Installing pipx"
-export PIPX_BIN_DIR=/usr/local/opt/pipx_bin
-export PIPX_HOME=/usr/local/opt/pipx
+export PIPX_BIN_DIR=/opt/homebrew/opt/pipx_bin
+export PIPX_HOME=/opt/homebrew/opt/pipx
 
 brew_smart_install "pipx"
 
