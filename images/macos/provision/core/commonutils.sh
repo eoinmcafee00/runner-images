@@ -10,25 +10,25 @@ for package in $common_packages; do
     brew_smart_install "$package"
 done
 
-cask_packages=$(get_toolset_value '.brew.cask_packages[]')
-for package in $cask_packages; do
-    echo "Installing $package..."
-    if [[ $package == "virtualbox" ]]; then
-        # VirtualBox 7 crashes
-        # macOS host: Dropped all kernel extensions. VirtualBox relies fully on the hypervisor and vmnet frameworks provided by Apple now.
-        vbcask_url="https://raw.githubusercontent.com/Homebrew/homebrew-cask/aa3c55951fc9d687acce43e5c0338f42c1ddff7b/Casks/virtualbox.rb"
-        download_with_retries $vbcask_url
-        brew install ./virtualbox.rb
-        rm ./virtualbox.rb
-    else
-        brew install --cask $package
-    fi
-done
+#cask_packages=$(get_toolset_value '.brew.cask_packages[]')
+#for package in $cask_packages; do
+#    echo "Installing $package..."
+#    if [[ $package == "virtualbox" ]]; then
+#        # VirtualBox 7 crashes
+#        # macOS host: Dropped all kernel extensions. VirtualBox relies fully on the hypervisor and vmnet frameworks provided by Apple now.
+#        vbcask_url="https://raw.githubusercontent.com/Homebrew/homebrew-cask/aa3c55951fc9d687acce43e5c0338f42c1ddff7b/Casks/virtualbox.rb"
+#        download_with_retries $vbcask_url
+#        brew install ./virtualbox.rb
+#        rm ./virtualbox.rb
+#    else
+#        brew install --cask $package
+#    fi
+#done
 
 # Load "Parallels International GmbH"
-if is_Monterey; then
-    sudo kextload /Applications/Parallels\ Desktop.app/Contents/Library/Extensions/10.9/prl_hypervisor.kext || true
-fi
+#if is_Monterey; then
+#    sudo kextload /Applications/Parallels\ Desktop.app/Contents/Library/Extensions/10.9/prl_hypervisor.kext || true
+#fi
 
 # Execute AppleScript to change security preferences
 # System Preferences -> Security & Privacy -> General -> Unlock -> Allow -> Not now
@@ -53,31 +53,31 @@ if is_Monterey; then
 fi
 
 # Validate "Parallels International GmbH" kext
-if is_Monterey; then
-    echo "Closing System Preferences window if it is still opened"
-    killall "System Preferences" || true
-
-    echo "Checking parallels kexts"
-    dbName="/var/db/SystemPolicyConfiguration/KextPolicy"
-    dbQuery="SELECT * FROM kext_policy WHERE bundle_id LIKE 'com.parallels.kext.%';"
-    kext=$(sudo sqlite3 $dbName "$dbQuery")
-
-    if [ -z "$kext" ]; then
-        echo "Parallels International GmbH not found"
-        exit 1
-    fi
-
-    # Create env variable
-    url=$(brew info --json=v2 --installed | jq -r '.casks[] | select(.name[] == "Parallels Desktop").url')
-    if [ -z "$url" ]; then
-        echo "Unable to parse url for Parallels Desktop cask"
-        exit 1
-    fi
-    echo "export PARALLELS_DMG_URL=$url" >> "${HOME}/.bashrc"
-fi
+#if is_Monterey; then
+#    echo "Closing System Preferences window if it is still opened"
+#    killall "System Preferences" || true
+#
+#    echo "Checking parallels kexts"
+#    dbName="/var/db/SystemPolicyConfiguration/KextPolicy"
+#    dbQuery="SELECT * FROM kext_policy WHERE bundle_id LIKE 'com.parallels.kext.%';"
+#    kext=$(sudo sqlite3 $dbName "$dbQuery")
+#
+#    if [ -z "$kext" ]; then
+#        echo "Parallels International GmbH not found"
+#        exit 1
+#    fi
+#
+#    # Create env variable
+#    url=$(brew info --json=v2 --installed | jq -r '.casks[] | select(.name[] == "Parallels Desktop").url')
+#    if [ -z "$url" ]; then
+#        echo "Unable to parse url for Parallels Desktop cask"
+#        exit 1
+#    fi
+#    echo "export PARALLELS_DMG_URL=$url" >> "${HOME}/.bashrc"
+#fi
 
 # Invoke bazel to download bazel version via bazelisk
-bazel
+#bazel
 
 # Install Azure DevOps extension for Azure Command Line Interface
 az extension add -n azure-devops
