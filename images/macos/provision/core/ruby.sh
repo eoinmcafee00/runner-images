@@ -42,4 +42,7 @@ for TOOLSET_VERSION in ${TOOLSET_VERSIONS[@]}; do
     fi
 done
 
+export LDFLAGS="-L/usr/local/opt/ruby/lib" >> "$HOME/.bashrc"
+export CPPFLAGS="-I/usr/local/opt/ruby/include"  >> "$HOME/.bashrc"
+
 invoke_tests "Ruby"
