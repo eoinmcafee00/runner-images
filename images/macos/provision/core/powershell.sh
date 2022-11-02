@@ -33,7 +33,4 @@ pwsh -command "& {Import-Module Az}"
 # powershell link was removed in powershell-6.0.0-beta9
 sudo ln -s /usr/local/bin/pwsh /usr/local/bin/powershell
 
-sudo ln -s /opt/homebrew/bin/python3 /usr/local/bin/python3
-
-
 invoke_tests "Powershell"
