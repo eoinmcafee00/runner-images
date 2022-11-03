@@ -43,6 +43,7 @@ echo Installing Ruby...
 #done
 
 brew install rbenv
+eval "$(rbenv init - bash)"
 rbenv init
 rbenv install 3.1.2
 rbenv global 3.1.2
