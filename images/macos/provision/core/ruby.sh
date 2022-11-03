@@ -43,12 +43,10 @@ echo Installing Ruby...
 #done
 
 brew install rbenv >/dev/null
-eval "$(rbenv init - bash)"
 rbenv init
 rbenv install 3.0.3 >/dev/null
 rbenv global 3.0.3 >/dev/null
-rbenv install 3.1.2 >/dev/null
-rbenv global 3.1.2
+rbenv global 3.0.3 >/dev/null
 brew install rbenv ruby-build >/dev/null
 echo 'export PATH=”$HOME/.rbenv/bin:$PATH”' >> ~/.bashrc
 echo 'eval “$(rbenv init -)”' >> ~/.bashrc
