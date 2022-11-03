@@ -1,4 +1,4 @@
-#!/bin/bash -e -o pipefail
+#!/bin/bash
 source ~/utils/utils.sh
 
 #DEFAULT_RUBY_VERSION=$(get_toolset_value '.ruby.default')
@@ -42,12 +42,12 @@ echo Installing Ruby...
 #    fi
 #done
 
-brew install rbenv
+brew install rbenv >/dev/null
 eval "$(rbenv init - bash)"
 rbenv init
-rbenv install 3.1.2
+rbenv install 3.1.2 >/dev/null
 rbenv global 3.1.2
-brew install rbenv ruby-build
+brew install rbenv ruby-build >/dev/null
 echo 'export PATH=”$HOME/.rbenv/bin:$PATH”' >> ~/.bashrc
 echo 'eval “$(rbenv init -)”' >> ~/.bashrc
 source ~/.bashrc
