@@ -270,7 +270,7 @@
         ]
     },
     "ruby": {
-        "default": "3.0",
+        "default": "3.1.2",
         "rubygems": [
             "xcode-install",
             "cocoapods",

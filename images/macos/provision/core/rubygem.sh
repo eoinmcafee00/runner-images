@@ -3,7 +3,6 @@ source ~/utils/utils.sh
 
 
 echo Updating RubyGems...
-gem update --system
 
 gemsToInstall=$(get_toolset_value '.ruby.rubygems | .[]')
 if [ -n "$gemsToInstall" ]; then
