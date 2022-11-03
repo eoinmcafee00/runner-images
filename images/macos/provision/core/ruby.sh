@@ -48,9 +48,8 @@ rbenv install 3.0.3 >/dev/null
 rbenv global 3.0.3 >/dev/null
 rbenv global 3.0.3 >/dev/null
 brew install rbenv ruby-build >/dev/null
-echo 'export PATH=”$HOME/.rbenv/bin:$PATH”' >> ~/.bashrc
-echo 'eval “$(rbenv init -)”' >> ~/.bashrc
-source ~/.bashrc
+#echo 'export PATH=”$HOME/.rbenv/bin:$PATH”' >> ~/.bashrc
+#source ~/.bashrc
 
 export LDFLAGS="-L/opt/homebrew/opt/curl/lib" >> "$HOME/.bashrc"
 export CPPFLAGS="-I/opt/homebrew/opt/curl/include" >> "$HOME/.bashrc"
