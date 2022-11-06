@@ -6,9 +6,10 @@ echo "Installing Homebrew..."
 HOMEBREW_INSTALL_URL="https://raw.githubusercontent.com/Homebrew/install/master/install.sh"
 /bin/bash -c "$(curl -fsSL ${HOMEBREW_INSTALL_URL})"
 
-echo 'PATH="/opt/homebrew/opt/curl/bin:$PATH"' >> /Users/anka/.bashrc
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/anka/.bashrc
-eval "$(/opt/homebrew/bin/brew shellenv)"
+echo 'PATH="/opt/homebrew/opt/curl/bin:$PATH"'  >> "${HOME}/.bashrc"
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'  >> "${HOME}/.bashrc"
+eval "$(/opt/homebrew/bin/brew shellenv)"  >> "${HOME}/.bashrc"
+source "${HOME}/.bashrc"
 
 echo "Disabling Homebrew analytics..."
 brew analytics off
