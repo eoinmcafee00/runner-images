@@ -57,8 +57,9 @@ source ~/utils/utils.sh
 #echo 'export LDFLAGS="-L/opt/homebrew/opt/curl/lib"' >> "$HOME/.bashrc"
 #echo 'export CPPFLAGS="-I/opt/homebrew/opt/curl/include"' >> "$HOME/.bashrc"
 
+brew install readline openssl
 brew install rbenv ruby-build
 echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi'  >> "$HOME/.bashrc"
-RUBY_CFLAGS="-Wno-error=implicit-function-declaration" rbenv install 3.1.2
+CFLAGS="-Wno-error=implicit-function-declaration" RUBY_CONFIGURE_OPTS='--with-readline-dir=/usr/local/opt/readline/' arch -x86_64 rbenv install 3.1.2
 rbenv global 3.1.2
 invoke_tests "Ruby"
