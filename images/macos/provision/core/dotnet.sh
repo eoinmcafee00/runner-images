@@ -12,7 +12,7 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # Download installer from dot.net and keep it locally
 DOTNET_INSTALL_SCRIPT="https://dot.net/v1/dotnet-install.sh"
-curl -L -o "dotnet-install.sh" "$DOTNET_INSTALL_SCRIPT"
+curl --retry 3 --retry-delay 5 --http1.1 -L -o "dotnet-install.sh" "$DOTNET_INSTALL_SCRIPT"
 chmod +x ./dotnet-install.sh
 
 ARGS_LIST=()
@@ -25,11 +25,11 @@ for DOTNET_VERSION in "${DOTNET_VERSIONS[@]}"; do
 
     if [[ $DOTNET_VERSION == "6.0" ]]; then
         ARGS_LIST+=(
-            $(curl -s "$RELEASE_URL" | jq -r 'first(.releases[].sdks[]?.version | select(contains("preview") or contains("rc") | not))')
+            $(curl --http1.1 -s "$RELEASE_URL" | jq -r 'first(.releases[].sdks[]?.version | select(contains("preview") or contains("rc") | not))')
         )
     else
         ARGS_LIST+=(
-            $(curl -s "$RELEASE_URL" | \
+            $(curl --http1.1 -s "$RELEASE_URL" | \
             jq -r '.releases[].sdk."version"' | grep -v -E '\-(preview|rc)\d*' | \
             sort -r | rev | uniq -s 2 | rev)
         )

@@ -26,14 +26,27 @@ function Get-EnvironmentVariable($variable) {
 # Returns the object with information about current OS
 # It can be used for OS-specific tests
 function Get-OSVersion {
-    $osVersion = [Environment]::OSVersion
-    $osVersionMajorMinor = $osVersion.Version.ToString(2)
+    if ([Environment]::OSVersion.Platform -eq [System.PlatformID]::Unix) {
+        $osName = (sw_vers -productName).Trim()
+        $osVersion = (sw_vers -productVersion).Trim()
+        $osVersionMajorMinor = $osVersion.Split('.')[0..1] -join '.'
+    } else {
+        $osName = "Unknown"
+        $osVersion = "Unknown"
+        $osVersionMajorMinor = "Unknown"
+    }
+
+    Write-Host "OS Name: $osName"
+    Write-Host "OS Version: $osVersion"
+    Write-Host "OS Version Major Minor: $osVersionMajorMinor"
+
     return [PSCustomObject]@{
-        Version = $osVersion.Version
-        Platform = $osVersion.Platform
-        IsBigSur = $osVersion.Version.Major -eq "11"
-        IsMonterey = $osVersion.Version.Major -eq "12"
-        IsVentura = $osVersion.Version.Major -eq "13"
+        Name = $osName
+        Version = $osVersion
+        Platform = $osName  # Set the platform to the OS name instead of the OSVersion.Platform
+        IsBigSur = $osVersionMajorMinor -eq "11.0"
+        IsMonterey = $osVersionMajorMinor -eq "12.0"
+        IsVentura = $osVersionMajorMinor -eq "13.3"
     }
 }
 

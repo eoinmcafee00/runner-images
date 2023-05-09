@@ -9,6 +9,7 @@ param (
 
 $ErrorActionPreference = "Stop"
 
+Write-Host "Importing modules..."
 Import-Module "$PSScriptRoot/SoftwareReport.Common.psm1" -DisableNameChecking
 Import-Module "$PSScriptRoot/SoftwareReport.Xcode.psm1" -DisableNameChecking
 Import-Module "$PSScriptRoot/SoftwareReport.Android.psm1" -DisableNameChecking
@@ -21,43 +22,79 @@ Import-Module "$PSScriptRoot/../helpers/SoftwareReport.Helpers.psm1"
 Import-Module "$PSScriptRoot/../helpers/Common.Helpers.psm1"
 Import-Module "$PSScriptRoot/../helpers/Xcode.Helpers.psm1"
 
+Write-Host "Getting OS info..."
 # Operating System info
 $os = Get-OSVersion
 
+Write-Host "OS info: $os"
+
 # OS info
+Write-Host "Building OS info section..."
 $osInfo = Build-OSInfoSection $ImageName
 
+Write-Host "Building software report..."
 # Software report
 $softwareReport = [SoftwareReport]::new($osInfo)
 $installedSoftware = $softwareReport.Root.AddHeader("Installed Software")
 
 # Language and Runtime
+Write-Host "Adding Language and Runtime section..."
 $languageAndRuntime = $installedSoftware.AddHeader("Language and Runtime")
-$languageAndRuntime.AddToolVersionsListInline(".NET Core SDK", $(Get-DotnetVersionList), '^\d+\.\d+\.\d')
-$languageAndRuntime.AddToolVersion("Bash", $(Get-BashVersion))
-$languageAndRuntime.AddNodes($(Get-ClangLLVMVersions))
-$languageAndRuntime.AddNodes($(Get-GccVersions))
-$languageAndRuntime.AddNodes($(Get-FortranVersions))
-$languageAndRuntime.AddToolVersion("Go", $(Get-GoVersion))
-$languageAndRuntime.AddToolVersion("Julia", $(Get-JuliaVersion))
-$languageAndRuntime.AddToolVersion("Kotlin", $(Get-KotlinVersion))
-if (-not $os.IsVentura) {
-    $languageAndRuntime.AddToolVersion("Mono", $(Get-MonoVersion))
-    $languageAndRuntime.AddToolVersion("MSBuild", $(Get-MSBuildVersion))
-    $languageAndRuntime.AddToolVersion("Node.js", $(Get-NodeVersion))
-    $languageAndRuntime.AddToolVersion("NVM", $(Get-NVMVersion))
-    $languageAndRuntime.AddToolVersionsListInline("NVM - Cached node versions", $(Get-NVMNodeVersionList), '^\d+')
+$dotnetVersionList = $(Get-DotnetVersionList)
+Write-Host ".NET Core SDK Versions: $dotnetVersionList"
+$languageAndRuntime.AddToolVersionsListInline(".NET Core SDK", $dotnetVersionList, '^\d+\.\d+\.\d')
+$bashVersion = $(Get-BashVersion)
+Write-Host "Bash Version: $bashVersion"
+$languageAndRuntime.AddToolVersion("Bash", $bashVersion)
+$clangLLVMVersions = $(Get-ClangLLVMVersions)
+Write-Host "Clang/LLVM Versions: $clangLLVMVersions"
+$languageAndRuntime.AddNodes($clangLLVMVersions)
+$gccVersions = $(Get-GccVersions)
+Write-Host "GCC Versions: $gccVersions"
+$languageAndRuntime.AddNodes($gccVersions)
+$fortranVersions = $(Get-FortranVersions)
+Write-Host "Fortran Versions: $fortranVersions"
+$languageAndRuntime.AddNodes($fortranVersions)
+$goVersion = $(Get-GoVersion)
+Write-Host "Go Version: $goVersion"
+$languageAndRuntime.AddToolVersion("Go", $goVersion)
+$juliaVersion = $(Get-JuliaVersion)
+Write-Host "Julia Version: $juliaVersion"
+$languageAndRuntime.AddToolVersion("Julia", $juliaVersion)
+$kotlinVersion = $(Get-KotlinVersion)
+Write-Host "Kotlin Version: $kotlinVersion"
+$languageAndRuntime.AddToolVersion("Kotlin", $kotlinVersion)
+if (-not $os.'IsVentura') {
+    $monoVersion = $(Get-MonoVersion)
+    Write-Host "Mono Version: $monoVersion"
+    $languageAndRuntime.AddToolVersion("Mono", $monoVersion)
+    $msbuildVersion = $(Get-MSBuildVersion)
+    Write-Host "MSBuild Version: $msbuildVersion"
+    $languageAndRuntime.AddToolVersion("MSBuild", $msbuildVersion)
+    $nodeVersion = $(Get-NodeVersion)
+    Write-Host "Node.js Version: $nodeVersion"
+    $languageAndRuntime.AddToolVersion("Node.js", $nodeVersion)
+    $nvmVersion = $(Get-NVMVersion)
+    Write-Host "NVM Version: $nvmVersion"
+    $languageAndRuntime.AddToolVersion("NVM", $nvmVersion)
+    $nvmNodeVersionList = $(Get-NVMNodeVersionList)
+    Write-Host "NVM - Cached node versions: $nvmNodeVersionList"
+    $languageAndRuntime.AddToolVersionsListInline("NVM - Cached node versions", $nvmNodeVersionList, '^\d+')
 }
 $languageAndRuntime.AddToolVersion("Perl", $(Get-PerlVersion))
+write-host "Perl Version: $(Get-PerlVersion)"
 $languageAndRuntime.AddToolVersion("PHP", $(Get-PHPVersion))
+write-host "PHP Version: $(Get-PHPVersion)"
 if (-not $os.IsVentura) {
     $languageAndRuntime.AddToolVersion("Python", $(Get-PythonVersion))
     $languageAndRuntime.AddToolVersion("Python3", $(Get-Python3Version))
 }
 $languageAndRuntime.AddToolVersion("R", $(Get-RVersion))
+write-host "R Version: $(Get-RVersion)"
 $languageAndRuntime.AddToolVersion("Ruby", $(Get-RubyVersion))
-
+write-host "Ruby Version: $(Get-RubyVersion)"
 # Package Management
+Write-Host "Adding Package Management section..."
 $packageManagement = $installedSoftware.AddHeader("Package Management")
 $packageManagement.AddToolVersion("Bundler", $(Get-BundlerVersion))
 $packageManagement.AddToolVersion("Carthage", $(Get-CarthageVersion))
@@ -81,6 +118,7 @@ $packageManagement.AddToolVersion("Yarn", $(Get-YarnVersion))
 $packageManagement.AddNode($(Build-PackageManagementEnvironmentTable))
 
 # Project Management
+Write-Host "Adding Project Management section..."
 $projectManagement = $installedSoftware.AddHeader("Project Management")
 $projectManagement.AddToolVersion("Apache Ant", $(Get-ApacheAntVersion))
 if (-not $os.IsVentura) {
@@ -90,6 +128,7 @@ if (-not $os.IsVentura) {
 }
 
 # Utilities
+Write-Host "Adding Utilities section..."
 $utilities = $installedSoftware.AddHeader("Utilities")
 $utilities.AddToolVersion("7-Zip", $(Get-7zipVersion))
 $utilities.AddToolVersion("aria2", $(Get-Aria2Version))
@@ -138,6 +177,7 @@ $utilities.AddToolVersion("yq", $(Get-YqVersion))
 $utilities.AddToolVersion("zstd", $(Get-ZstdVersion))
 
 # Tools
+Write-Host "Adding Tools section..."
 $tools = $installedSoftware.AddHeader("Tools")
 if ($os.IsBigSur) {
     $tools.AddToolVersion("Aliyun CLI", $(Get-AliyunCLIVersion))
@@ -157,20 +197,26 @@ $tools.AddToolVersion("CodeQL Action Bundles", $(Get-CodeQLBundleVersions))
 if ($os.IsMonterey) {
     $tools.AddToolVersion("Colima", $(Get-ColimaVersion))
 }
+write-host "Adding fastlane..."
 $tools.AddToolVersion("Fastlane", $(Get-FastlaneVersion))
 $tools.AddToolVersion("GHC", $(Get-GHCVersion))
+write-host "Adding ghc..."
 $tools.AddToolVersion("GHCup", $(Get-GHCupVersion))
+write-host "Adding ghcup..."
 if (-not $os.IsVentura) {
     $tools.AddToolVersion("Jazzy", $(Get-JazzyVersion))
 }
 $tools.AddToolVersion("Stack", $(Get-StackVersion))
+write-host "Adding stack..."
 $tools.AddToolVersion("SwiftFormat", $(Get-SwiftFormatVersion))
+write-host "Adding swiftformat..."
 if (-not $os.IsVentura) {
     $tools.AddToolVersion("Swig", $(Get-SwigVersion))
 }
 $tools.AddToolVersion("Xcode Command Line Tools", $(Get-XcodeCommandLineToolsVersion))
-
+write host "Adding xcode command line tools..."
 # Linters
+Write-Host "Adding Linters section..."
 $linters = $installedSoftware.AddHeader("Linters")
 $linters.AddToolVersion("SwiftLint", $(Get-SwiftLintVersion))
 if (-not $os.IsVentura) {
@@ -178,11 +224,13 @@ if (-not $os.IsVentura) {
 }
 
 # Browsers
+Write-Host "Adding Browsers section..."
 $browsers = $installedSoftware.AddHeader("Browsers")
 $browsers.AddNodes($(Build-BrowserSection))
 $browsers.AddNode($(Build-BrowserWebdriversEnvironmentTable))
 
 # Java
+Write-Host "Adding Java section..."
 $java = $installedSoftware.AddHeader("Java")
 $java.AddTable($(Get-JavaVersions))
 
@@ -193,6 +241,7 @@ if (-not $os.IsVentura) {
 }
 
 # Rust
+Write-Host "Adding Rust section..."
 $rust = $installedSoftware.AddHeader("Rust Tools")
 $rust.AddToolVersion("Cargo", $(Get-RustCargoVersion))
 $rust.AddToolVersion("Rust", $(Get-RustVersion))
@@ -208,6 +257,7 @@ $rustPackages.AddToolVersion("Clippy", $(Get-RustClippyVersion))
 $rustPackages.AddToolVersion("Rustfmt", $(Get-RustfmtVersion))
 
 # PowerShell
+Write-Host "Adding PowerShell section..."
 $powerShell = $installedSoftware.AddHeader("PowerShell Tools")
 $powerShell.AddToolVersion("PowerShell", $(Get-PowershellVersion))
 

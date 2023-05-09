@@ -28,10 +28,11 @@ APPLICATION="/usr/local/bin/msedgedriver"
 EDGEDRIVER_DIR="/usr/local/share/edge_driver"
 EDGEDRIVER_BIN="$EDGEDRIVER_DIR/msedgedriver"
 
-mkdir -p $EDGEDRIVER_DIR
+sudo mkdir -p $EDGEDRIVER_DIR
+sudo chown $(whoami) $EDGEDRIVER_DIR
 
 unzip "edgedriver.zip" -d $EDGEDRIVER_DIR
-ln -s "$EDGEDRIVER_BIN" $APPLICATION
+sudo ln -s "$EDGEDRIVER_BIN" $APPLICATION
 echo "export EDGEWEBDRIVER=${EDGEDRIVER_DIR}" >> "${HOME}/.bashrc"
 popd > /dev/null
 

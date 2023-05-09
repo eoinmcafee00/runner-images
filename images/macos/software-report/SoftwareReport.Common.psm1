@@ -154,7 +154,6 @@ function Build-OSInfoSection {
     param (
         [string] $ImageName
     )
-
     $fieldsToInclude = @("System Version:", "Kernel Version:")
     $rawSystemInfo = Invoke-Expression "system_profiler SPSoftwareDataType"
     $parsedSystemInfo = $rawSystemInfo | Where-Object { -not ($_ | Select-String -NotMatch $fieldsToInclude) } | ForEach-Object { $_.Trim() }
@@ -163,12 +162,18 @@ function Build-OSInfoSection {
     $systemVersion = $parsedSystemInfo[0].Replace($fieldsToInclude[0],"").Trim()
     $kernelVersion = $parsedSystemInfo[1].Replace($fieldsToInclude[1],"").Trim()
 
+    Write-Host "System Version: $systemVersion"
+    Write-Host "Kernel Version: $kernelVersion"
+    Write-Host "Image Version:  $systemVersion"
+
     $osInfoNode = [HeaderNode]::new("macOS $version")
     $osInfoNode.AddToolVersion("OS Version:", $systemVersion)
     $osInfoNode.AddToolVersion("Kernel Version:", $kernelVersion)
-    $osInfoNode.AddToolVersion("Image Version:", $ImageName.Split('_')[1])
+    $osInfoNode.AddToolVersion("Image Version:", $systemVersion)
     return $osInfoNode
 }
+
+
 
 function Get-MonoVersion {
     $monoVersion = mono --version | Out-String | Take-Part -Part 4
@@ -495,7 +500,8 @@ function Get-SoxVersion {
 }
 
 function Get-StackVersion {
-    $stackVersion = Run-Command "stack --version" | Take-Part -Part 1 | ForEach-Object {$_.replace(",","")}
+    $output = Run-Command "stack --version"
+    $stackVersion = ($output | Select-String -Pattern 'Version (\S+),').Matches.Groups[1].Value
     return $stackVersion
 }
 

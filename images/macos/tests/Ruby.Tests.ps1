@@ -11,7 +11,7 @@ Describe "Ruby" {
     }
 
     It "Ruby tools are consistent" {
-        $expectedPrefix = "/usr/local"
+        $expectedPrefix = ".rbenv/shims"
         Get-WhichTool "ruby" | Should -Match "$($expectedPrefix)*"
         Get-WhichTool "gem" | Should -Match "$($expectedPrefix)*"
         Get-WhichTool "bundler" | Should -Match "$($expectedPrefix)*"

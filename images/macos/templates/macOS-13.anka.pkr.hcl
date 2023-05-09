@@ -51,7 +51,7 @@ variable "vcpu_count" {
 
 variable "ram_size" {
   type = string
-  default = "24G"
+  default = "14G"
 }
 
 variable "image_os" {

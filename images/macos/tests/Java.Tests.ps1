@@ -82,8 +82,8 @@ Describe "Java" {
                 "gradle --version" | Should -ReturnZeroExitCode
             }
         
-            It "Gradle is installed to /usr/local/bin" {
-                (Get-Command "gradle").Path | Should -BeExactly "/usr/local/bin/gradle"
+            It "Gradle is installed to /opt/homebrew/bin/" {
+                (Get-Command "gradle").Path | Should -BeExactly "/opt/homebrew/bin/gradle"
             }
         }
     }
